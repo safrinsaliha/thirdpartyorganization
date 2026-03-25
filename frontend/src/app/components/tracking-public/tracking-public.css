@@ -1,0 +1,140 @@
+.public-tracking-wrapper {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.tracking-hero {
+  background: linear-gradient(135deg, #1e293b 0%, #3f51b5 100%);
+  padding: 100px 0;
+  color: #fff;
+}
+
+.search-box-container {
+  max-width: 600px;
+}
+
+.btn-accent {
+  background-color: #ff4081;
+  color: #fff;
+}
+
+.btn-accent:hover {
+  background-color: #f50057;
+  color: #fff;
+}
+
+.tracking-card {
+  margin-top: -60px;
+  border-top: 5px solid #3f51b5;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748b;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.shipping-info-summary .info-item {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.info-item .label {
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.info-item .value {
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.public-timeline {
+  position: relative;
+  padding: 40px 0;
+}
+
+.timeline-track::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background: #f1f5f9;
+  z-index: 1;
+}
+
+.timeline-step {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  flex: 1;
+}
+
+.step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.timeline-step.active .step-dot {
+  background: #3f51b5;
+  color: #fff;
+  transform: scale(1.2);
+}
+
+.step-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timeline-step.active .step-label {
+  color: #3f51b5;
+}
+
+.feature-item {
+  background: #fff;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 768px) {
+  .public-timeline {
+    padding: 0;
+  }
+}

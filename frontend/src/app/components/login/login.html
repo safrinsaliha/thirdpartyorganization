@@ -1,0 +1,53 @@
+<div class="login-container">
+  <div class="login-card glass-panel">
+    <div class="login-header">
+      <i class="bi bi-truck-flatbed logo-icon"></i>
+      <h2>LogisticsPro</h2>
+      <p>Logistics Management System</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            class="form-control" 
+            placeholder="Enter admin@cargo.com"
+          >
+        </div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password" 
+            class="form-control" 
+            placeholder="Enter adminpassword"
+          >
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage()" class="alert alert-danger py-2 mb-3">
+        {{ errorMessage() }}
+      </div>
+
+      <button type="submit" class="btn btn-primary login-btn" [disabled]="loginForm.invalid || isLoading()">
+        <span *ngIf="!isLoading()">Sign In</span>
+        <span *ngIf="isLoading()" class="spinner-border spinner-border-sm"></span>
+      </button>
+    </form>
+    
+    <div class="login-footer mt-4">
+      <p>Don't have an account? <a routerLink="/signup">Register here</a></p>
+      <p class="mt-2">Track your shipment publicly at <a routerLink="/tracking-public">Tracking Portal</a></p>
+    </div>
+  </div>
+</div>

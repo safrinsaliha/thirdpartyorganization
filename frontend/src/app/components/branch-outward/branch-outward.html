@@ -1,0 +1,99 @@
+<div class="outward-container animation-fade-in">
+  <div class="header-section mb-4">
+    <h1 class="page-title text-dark">Branch Outward (Dispatch)</h1>
+    <p class="text-muted">Prepare and dispatch shipments for final delivery or hub transfer</p>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-5 col-lg-4">
+      <div class="outward-form-card premium-card bg-white p-4">
+        <h5 class="section-title mb-4 text-primary"><i class="bi bi-truck-flatbed me-2"></i>Dispatch Processing</h5>
+        <p class="small text-muted mb-3">Scan barcode or enter CN number to mark for outward dispatch.</p>
+        
+        <div class="input-group input-group-lg mb-3 shadow-sm border rounded">
+          <span class="input-group-text bg-white border-0"><i class="bi bi-upc-scan"></i></span>
+          <input 
+            type="text" 
+            class="form-control border-0 bg-white" 
+            placeholder="CN-XXXXXX"
+            [ngModel]="consignmentNo()"
+            (ngModelChange)="consignmentNo.set($event)"
+            (keyup.enter)="processOutward()"
+            [disabled]="isLoading()"
+          >
+        </div>
+        
+        <button class="btn btn-primary w-100 py-3 fw-bold shadow-sm" (click)="processOutward()" [disabled]="isLoading() || !consignmentNo()">
+          <span *ngIf="!isLoading()">
+            <i class="bi bi-cursor-fill me-2"></i> Confirm Dispatch
+          </span>
+          <span *ngIf="isLoading()" class="spinner-border spinner-border-sm"></span>
+        </button>
+
+        <div *ngIf="message()" class="alert alert-danger mt-3 py-2 border-0 shadow-sm d-flex align-items-center">
+          <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
+          <span>{{ message() }}</span>
+        </div>
+      </div>
+
+      <!-- Live Manifest Card -->
+      <div class="premium-card bg-dark text-white p-4 mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-1">Items in Manifest</h6>
+            <h3 class="m-0 fw-bold">{{ outwardList().length }}</h3>
+          </div>
+          <i class="bi bi-file-earmark-text fs-1 opacity-25"></i>
+        </div>
+        <button class="btn btn-outline-light btn-sm mt-3 w-100">Print Manifest</button>
+      </div>
+    </div>
+
+    <div class="col-md-7 col-lg-8">
+      <div class="table-card premium-card bg-white p-0 overflow-hidden">
+        <div class="p-4 bg-light border-bottom d-flex justify-content-between align-items-center">
+          <h5 class="section-title m-0 text-dark">Dispatched Shipments Dashboard</h5>
+          <span class="badge bg-primary-light text-primary fw-bold p-2"><i class="bi bi-send-check-fill me-1"></i> Active Dispatch</span>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th class="ps-4">Consignment #</th>
+                <th>Consignee Details</th>
+                <th>Destination</th>
+                <th class="text-end pe-4">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of outwardList()">
+                <td class="ps-4">
+                  <div class="fw-bold text-primary">{{ item.consignment_no }}</div>
+                  <div class="text-muted x-small">Dispatched: {{ 'Just Now' }}</div>
+                </td>
+                <td>
+                  <div class="fw-semibold">{{ item.customer_name }}</div>
+                  <div class="text-muted small">Route ID: #{{ item.id }}</div>
+                </td>
+                <td>
+                  <span class="badge bg-info-light text-info">{{ item.destination }}</span>
+                </td>
+                <td class="text-end pe-4 text-primary fw-bold">
+                  <i class="bi bi-truck me-1"></i> Out for delivery
+                </td>
+              </tr>
+              <tr *ngIf="outwardList().length === 0">
+                <td colspan="4" class="text-center py-5">
+                  <div class="opacity-25 mb-3">
+                    <i class="bi bi-mailbox fs-1"></i>
+                  </div>
+                  <p class="text-muted mb-0">No shipments dispatched in this branch session.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

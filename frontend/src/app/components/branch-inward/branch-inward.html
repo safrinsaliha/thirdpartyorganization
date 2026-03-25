@@ -1,0 +1,98 @@
+<div class="inward-container animation-fade-in">
+  <div class="header-section mb-4">
+    <h1 class="page-title">Branch Inward</h1>
+    <p class="text-muted">Efficiently receive and process incoming shipments at your branch</p>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-5 col-lg-4">
+      <div class="inward-form-card premium-card bg-white p-4">
+        <h5 class="section-title mb-4 text-primary"><i class="bi bi-qr-code-scan me-2"></i>Inward Processing</h5>
+        <p class="small text-muted mb-3">Scan barcode or enter consignment number to receive shipment.</p>
+        
+        <div class="input-group input-group-lg mb-3 shadow-sm border rounded">
+          <span class="input-group-text bg-white border-0"><i class="bi bi-upc-scan"></i></span>
+          <input 
+            type="text" 
+            class="form-control border-0 bg-white" 
+            placeholder="CN-XXXXXX"
+            [ngModel]="consignmentNo()"
+            (ngModelChange)="consignmentNo.set($event)"
+            (keyup.enter)="processInward()"
+            [disabled]="isLoading()"
+          >
+        </div>
+        
+        <button class="btn btn-primary w-100 py-3 fw-bold shadow-sm" (click)="processInward()" [disabled]="isLoading() || !consignmentNo()">
+          <span *ngIf="!isLoading()">
+            <i class="bi bi-download me-2"></i> Confirm Arrival
+          </span>
+          <span *ngIf="isLoading()" class="spinner-border spinner-border-sm"></span>
+        </button>
+
+        <div *ngIf="message()" class="alert alert-danger mt-3 py-2 border-0 shadow-sm d-flex align-items-center">
+          <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
+          <span>{{ message() }}</span>
+        </div>
+      </div>
+
+      <!-- Quick Stats Card -->
+      <div class="premium-card bg-primary text-white p-4 mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-white-50 mb-1">Session Total</h6>
+            <h3 class="m-0 fw-bold">{{ inwardList().length }}</h3>
+          </div>
+          <i class="bi bi-box-seam fs-1 opacity-25"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7 col-lg-8">
+      <div class="table-card premium-card bg-white p-0 overflow-hidden">
+        <div class="p-4 bg-light border-bottom d-flex justify-content-between align-items-center">
+          <h5 class="section-title m-0 text-dark">Recently Received High-Priority Items</h5>
+          <span class="badge bg-success-light text-success fw-bold p-2"><i class="bi bi-clock-history me-1"></i> Live Session</span>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th class="ps-4">Consignment #</th>
+                <th>Client Details</th>
+                <th>Source Hub</th>
+                <th class="text-end pe-4">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of inwardList()">
+                <td class="ps-4">
+                  <div class="fw-bold text-primary">{{ item.consignment_no }}</div>
+                  <div class="text-muted x-small">Scanned: Just now</div>
+                </td>
+                <td>
+                  <div class="fw-semibold">{{ item.customer_name }}</div>
+                  <div class="text-muted small">Standard Surface</div>
+                </td>
+                <td>
+                  <span class="badge bg-info-light text-info">{{ item.origin }}</span>
+                </td>
+                <td class="text-end pe-4 text-success fw-bold">
+                  <i class="bi bi-check-circle-fill me-1"></i> Received
+                </td>
+              </tr>
+              <tr *ngIf="inwardList().length === 0">
+                <td colspan="4" class="text-center py-5">
+                  <div class="opacity-25 mb-3">
+                    <i class="bi bi-inbox fs-1"></i>
+                  </div>
+                  <p class="text-muted mb-0">No items scanned in current branch session.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

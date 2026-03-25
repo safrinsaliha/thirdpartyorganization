@@ -1,0 +1,98 @@
+<div class="public-tracking-wrapper">
+  <div class="tracking-hero">
+    <div class="container text-center py-5">
+      <h1 class="display-4 fw-bold text-white mb-2">Track Your Shipment</h1>
+      <p class="lead text-white-50 mb-4">Enter your tracking ID to get real-time updates</p>
+      
+      <div class="search-box-container mx-auto">
+        <div class="input-group input-group-lg shadow-lg">
+          <input 
+            type="text" 
+            class="form-control border-0 px-4" 
+            placeholder="Consignment Number (e.g. CN-123456)"
+            [(ngModel)]="consignmentNo"
+            (keyup.enter)="trackConsignment()"
+          >
+          <button class="btn btn-accent px-4 fw-bold" (click)="trackConsignment()" [disabled]="isLoading() || !consignmentNo">
+            <span *ngIf="!isLoading()">Track Now</span>
+            <span *ngIf="isLoading()" class="spinner-border spinner-border-sm"></span>
+          </button>
+        </div>
+        <div *ngIf="message()" class="mt-3 text-warning fw-bold">
+          <i class="bi bi-exclamation-circle me-2"></i> {{ message() }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container py-5" *ngIf="trackingData()">
+    <div class="tracking-card premium-card bg-white p-4 p-md-5 animation-slide-up">
+      <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+          <h2 class="fw-bold text-primary mb-1">{{ trackingData()?.consignment_no }}</h2>
+          <div class="status-indicator">
+            <span class="pulse-dot"></span>
+            <span class="text-uppercase fw-bold letter-spacing-1 small">Current Status: {{ trackingData()?.status }}</span>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+          <div class="shipping-info-summary">
+            <div class="info-item">
+              <span class="label">Origin:</span>
+              <span class="value">{{ trackingData()?.origin }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Destination:</span>
+              <span class="value">{{ trackingData()?.destination }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="public-timeline my-5">
+        <div class="d-flex justify-content-between position-relative timeline-track">
+          <div *ngFor="let step of getTimelineSteps()" class="timeline-step" [class.active]="step.active">
+            <div class="step-dot">
+              <i class="bi" [class]="step.icon"></i>
+            </div>
+            <div class="step-content mt-3">
+              <div class="step-label">{{ step.label }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tracking-footer mt-5 pt-4 border-top text-center">
+        <p class="text-muted mb-0">Need help with your shipment? <a href="#" class="text-primary fw-bold text-decoration-none">Contact Support</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tracking-features py-5 bg-light" *ngIf="!trackingData()">
+    <div class="container">
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="feature-item p-4">
+            <i class="bi bi-clock-history fs-1 text-primary mb-3"></i>
+            <h4>Real-time Tracking</h4>
+            <p class="text-muted">Get minute-by-minute updates on your shipment's journey.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-item p-4">
+            <i class="bi bi-shield-check fs-1 text-primary mb-3"></i>
+            <h4>Secure Shipping</h4>
+            <p class="text-muted">We handle your cargo with the highest safety standards.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-item p-4">
+            <i class="bi bi-globe fs-1 text-primary mb-3"></i>
+            <h4>Global Network</h4>
+            <p class="text-muted">Connect your business across borders with ease.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

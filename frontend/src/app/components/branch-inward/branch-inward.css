@@ -1,0 +1,22 @@
+.inward-container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.section-title {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 1.1rem;
+}
+
+.custom-table thead th {
+  background: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.custom-table tbody td {
+  padding: 15px;
+  font-size: 0.9rem;
+}

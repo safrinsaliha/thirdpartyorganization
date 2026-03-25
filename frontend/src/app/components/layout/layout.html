@@ -1,0 +1,154 @@
+<div class="dashboard-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.collapsed]="isSidebarCollapsed">
+    <div class="sidebar-header">
+      <div class="logo-box">
+        <i class="bi bi-truck-flatbed"></i>
+        <span class="logo-text" *ngIf="!isSidebarCollapsed">LogisticsPro</span>
+      </div>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <ul>
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard" title="Dashboard">
+            <i class="bi bi-speedometer2"></i>
+            <span *ngIf="!isSidebarCollapsed">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-divider" *ngIf="!isSidebarCollapsed">Master</li>
+        <li routerLinkActive="active">
+          <a routerLink="/master" title="Master">
+            <i class="bi bi-database-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">Master</span>
+          </a>
+        </li>
+        <li class="nav-divider" *ngIf="!isSidebarCollapsed">Operation</li>
+        <li routerLinkActive="active">
+          <a routerLink="/booking" title="Booking">
+            <i class="bi bi-journal-plus"></i>
+            <span *ngIf="!isSidebarCollapsed">Booking</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/new-pickup" title="New Pickup">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">New Pickup</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/hub-items" title="Hub Direct">
+            <i class="bi bi-box-seam-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">Hub Direct</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/add-tariff" title="Add Tariff Upload">
+            <i class="bi bi-file-earmark-arrow-up-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">Add Tariff Upload</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/branch-outward" title="Branch Outward">
+            <i class="bi bi-arrow-up-right-square-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">Branch Outward</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/branch-inward" title="Branch Inward">
+            <i class="bi bi-arrow-down-left-square-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">Branch Inward</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/out-for-delivery" title="Out For Delivery">
+            <i class="bi bi-truck"></i>
+            <span *ngIf="!isSidebarCollapsed">Out For Delivery</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/delivery" title="New Delivery">
+            <i class="bi bi-bicycle"></i>
+            <span *ngIf="!isSidebarCollapsed">New Delivery</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/delivery-entry" title="Delivery Entry">
+            <i class="bi bi-clipboard-check-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">Delivery Entry</span>
+          </a>
+        </li>
+        <li class="nav-divider" *ngIf="!isSidebarCollapsed">System</li>
+        <li routerLinkActive="active">
+          <a routerLink="/reports" title="Report">
+            <i class="bi bi-file-earmark-bar-graph-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">Report</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/tracking" title="Tracking">
+            <i class="bi bi-search"></i>
+            <span *ngIf="!isSidebarCollapsed">Tracking</span>
+          </a>
+        </li>
+        <li class="nav-divider" *ngIf="!isSidebarCollapsed">Finance</li>
+        <li routerLinkActive="active">
+          <a routerLink="/pay-amount" title="Pay Amount">
+            <i class="bi bi-cash-stack"></i>
+            <span *ngIf="!isSidebarCollapsed">Pay Amount</span>
+          </a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/wallet" title="Wallet">
+            <i class="bi bi-wallet2"></i>
+            <span *ngIf="!isSidebarCollapsed">Wallet</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <i class="bi bi-box-arrow-left"></i>
+        <span *ngIf="!isSidebarCollapsed">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Navbar -->
+    <header class="top-navbar">
+      <div class="nav-left">
+        <button class="toggle-btn" (click)="toggleSidebar()">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Search consignment...">
+        </div>
+      </div>
+      
+      <div class="nav-right">
+        <div class="notification-bell">
+          <i class="bi bi-bell"></i>
+          <span class="badge">3</span>
+        </div>
+        <div class="user-profile">
+          <div class="user-info">
+            <span class="user-name">{{ currentUser()?.name }}</span>
+            <span class="user-role text-capitalize">{{ currentUser()?.role }}</span>
+          </div>
+          <div class="user-avatar text-uppercase">
+            {{ currentUser()?.name?.charAt(0) }}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <section class="content-body">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>

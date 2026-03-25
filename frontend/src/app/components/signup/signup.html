@@ -1,0 +1,101 @@
+<div class="login-container">
+  <div class="login-card glass-panel">
+    <div class="login-header">
+      <i class="bi bi-person-plus logo-icon"></i>
+      <h2>Create Account</h2>
+      <p>Join LogisticsPro Management System</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group mb-3">
+        <label for="fullName" class="form-label">Full Name</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-person"></i></span>
+          <input 
+            type="text" 
+            id="fullName" 
+            formControlName="fullName" 
+            class="form-control" 
+            placeholder="John Doe"
+          >
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            class="form-control" 
+            placeholder="john@example.com"
+          >
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="mobile" class="form-label">Mobile Number</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-phone"></i></span>
+          <input 
+            type="text" 
+            id="mobile" 
+            formControlName="mobile" 
+            class="form-control" 
+            placeholder="1234567890"
+          >
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password" 
+            class="form-control" 
+            placeholder="••••••••"
+          >
+        </div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-shield-check"></i></span>
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            formControlName="confirmPassword" 
+            class="form-control" 
+            placeholder="••••••••"
+          >
+        </div>
+        <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched" class="text-danger small mt-1">
+          Passwords do not match.
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage()" class="alert alert-danger py-2 mb-3">
+        {{ errorMessage() }}
+      </div>
+
+      <div *ngIf="successMessage()" class="alert alert-success py-2 mb-3">
+        {{ successMessage() }}
+      </div>
+
+      <button type="submit" class="btn btn-primary login-btn" [disabled]="registerForm.invalid || isLoading()">
+        <span *ngIf="!isLoading()">Register Now</span>
+        <span *ngIf="isLoading()" class="spinner-border spinner-border-sm"></span>
+      </button>
+    </form>
+    
+    <div class="login-footer mt-4">
+      <p>Already have an account? <a routerLink="/login">Sign In here</a></p>
+    </div>
+  </div>
+</div>

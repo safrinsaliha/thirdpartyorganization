@@ -1,0 +1,78 @@
+<div class="container-fluid p-4">
+  <div class="header-card mb-4 p-4 glass-card text-center">
+    <h2 class="text-white mb-1"><i class="bi bi-cash-stack me-2"></i>Record Payment</h2>
+    <p class="text-light-50 mb-0">Record payments against outstanding consignment bills</p>
+  </div>
+
+  <div class="max-600 mx-auto">
+    <!-- Search Section -->
+    <div class="premium-card p-4 mb-4">
+      <div class="input-group input-group-lg">
+        <span class="input-group-text bg-transparent border-end-0 text-light-50">
+          <i class="bi bi-search"></i>
+        </span>
+        <input type="text" class="form-control premium-input border-start-0" 
+               placeholder="Enter Consignment No (e.g. CN-552144)"
+               [value]="searchQuery()" (input)="searchQuery.set($any($event.target).value)"
+               (keyup.enter)="onSearch()">
+        <button class="btn btn-primary px-4" (click)="onSearch()" [disabled]="isLoading()">
+          @if (isLoading()) { <span class="spinner-border spinner-border-sm me-2"></span> }
+          Search
+        </button>
+      </div>
+    </div>
+
+    @if (foundBooking()) {
+      <div class="premium-card p-4 animate__animated animate__fadeInUp">
+        <div class="d-flex justify-content-between align-items-start mb-4">
+          <div>
+            <h5 class="text-white mb-1">{{foundBooking()?.consignment_no}}</h5>
+            <p class="text-light-50 mb-0">{{foundBooking()?.customer_name}}</p>
+          </div>
+          <div class="text-end">
+            <span class="text-light-50 d-block small">Amount Due</span>
+            <h4 class="text-primary mb-0">₹{{foundBooking()?.billing?.net_total}}</h4>
+          </div>
+        </div>
+
+        <hr class="border-secondary-subtle opacity-10 my-4">
+
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label text-light-50">Payment Amount</label>
+            <input type="number" class="form-control premium-input" formControlName="amount">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-light-50">Payment Mode</label>
+            <div class="d-flex gap-2">
+              <input type="radio" class="btn-check" id="mode-cash" formControlName="payment_mode" value="CASH">
+              <label class="btn btn-outline-secondary flex-grow-1" for="mode-cash">Cash</label>
+
+              <input type="radio" class="btn-check" id="mode-upi" formControlName="payment_mode" value="UPI">
+              <label class="btn btn-outline-secondary flex-grow-1" for="mode-upi">UPI / Online</label>
+
+              <input type="radio" class="btn-check" id="mode-wallet" formControlName="payment_mode" value="WALLET">
+              <label class="btn btn-outline-secondary flex-grow-1" for="mode-wallet">Wallet</label>
+            </div>
+          </div>
+
+          @if (paymentForm.value.payment_mode !== 'CASH') {
+            <div class="mb-4 animate__animated animate__fadeIn">
+              <label class="form-label text-light-50">Transaction ID / Ref</label>
+              <input type="text" class="form-control premium-input" formControlName="transaction_id" placeholder="Enter reference number">
+            </div>
+          }
+
+          <button type="submit" class="btn btn-success w-100 py-3 mt-2" [disabled]="!paymentForm.valid">
+            <i class="bi bi-shield-check me-2"></i>Finalize Payment
+          </button>
+        </form>
+      </div>
+    } @else if (searchQuery() && !isLoading()) {
+      <div class="text-center p-5 text-light-50 italic">
+        No booking found with consignment number "{{searchQuery()}}"
+      </div>
+    }
+  </div>
+</div>

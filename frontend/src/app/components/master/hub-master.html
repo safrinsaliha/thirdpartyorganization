@@ -1,0 +1,76 @@
+<div class="container-fluid p-4">
+  <div class="header-card mb-4 p-4 glass-card">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="text-white mb-1"><i class="bi bi-hub me-2"></i>Hub Management</h2>
+        <p class="text-light-50 mb-0">Manage distribution hubs and regions</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-xl-4">
+      <div class="premium-card p-4">
+        <h5 class="text-white mb-4">Add New Hub</h5>
+        <form [formGroup]="hubForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label text-light-50">Hub Name</label>
+            <input type="text" class="form-control premium-input" formControlName="name" placeholder="Enter hub name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Hub Code</label>
+            <input type="text" class="form-control premium-input" formControlName="code" placeholder="HUB-001">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Location</label>
+            <input type="text" class="form-control premium-input" formControlName="location" placeholder="City/Region">
+          </div>
+          <div class="mb-4">
+            <label class="form-label text-light-50">Manager Name</label>
+            <input type="text" class="form-control premium-input" formControlName="manager_name" placeholder="Name">
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-3" [disabled]="!hubForm.valid">
+            <i class="bi bi-plus-lg me-2"></i>Save Hub
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-xl-8">
+      <div class="premium-card p-0 overflow-hidden">
+        <div class="p-4 border-bottom border-secondary-subtle">
+          <h5 class="text-white mb-0">Operational Hubs</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table premium-table mb-0">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Manager</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (hub of hubs(); track hub.id) {
+                <tr>
+                  <td><span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{hub.code}}</span></td>
+                  <td class="text-white">{{hub.name}}</td>
+                  <td class="text-light-50">{{hub.location}}</td>
+                  <td class="text-light-50">{{hub.manager_name}}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="4" class="text-center py-5 text-light-50">
+                    <i class="bi bi-geo-alt fs-1 d-block mb-3"></i>
+                    No hubs found
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

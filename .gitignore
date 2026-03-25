@@ -1,0 +1,23 @@
+# General
+.DS_Store
+*.log
+.env
+.idea/
+.vscode/
+
+# Backend (Python)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+.pytest_cache/
+backend/instance/
+logistics.db
+
+# Frontend (Node/Angular)
+node_modules/
+dist/
+TMP/
+.angular/

@@ -1,0 +1,100 @@
+<div class="container-fluid p-4">
+  <div class="header-card mb-4 p-4 glass-card">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="text-white mb-1"><i class="bi bi-people me-2"></i>Staff Management</h2>
+        <p class="text-light-50 mb-0">Manage employees across branches and hubs</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-xl-4">
+      <div class="premium-card p-4">
+        <h5 class="text-white mb-4">Add New Employee</h5>
+        <form [formGroup]="staffForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label text-light-50">Full Name</label>
+            <input type="text" class="form-control premium-input" formControlName="name" placeholder="Employee Name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Employee ID</label>
+            <input type="text" class="form-control premium-input" formControlName="employee_id" placeholder="EMP-001">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Designation</label>
+            <select class="form-select premium-input" formControlName="designation">
+              <option value="Manager">Manager</option>
+              <option value="Staff">Regular Staff</option>
+              <option value="Driver">Driver / Delivery Agent</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Mobile</label>
+            <input type="text" class="form-control premium-input" formControlName="mobile" placeholder="Contact Number">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Branch (Optional)</label>
+            <select class="form-select premium-input" formControlName="branch_id">
+              <option [ngValue]="null">Select Branch</option>
+              @for (b of branches(); track b.id) {
+                <option [ngValue]="b.id">{{b.name}}</option>
+              }
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="form-label text-light-50">Hub (Optional)</label>
+            <select class="form-select premium-input" formControlName="hub_id">
+              <option [ngValue]="null">Select Hub</option>
+              @for (h of hubs(); track h.id) {
+                <option [ngValue]="h.id">{{h.name}}</option>
+              }
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-3" [disabled]="!staffForm.valid">
+            <i class="bi bi-person-plus me-2"></i>Register Staff
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-xl-8">
+      <div class="premium-card p-0 overflow-hidden">
+        <div class="p-4 border-bottom border-secondary-subtle">
+          <h5 class="text-white mb-0">Active Staff</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table premium-table mb-0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Assignment</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (staff of staffList(); track staff.id) {
+                <tr>
+                  <td><span class="badge bg-primary-subtle text-primary">{{staff.employee_id}}</span></td>
+                  <td class="text-white">{{staff.name}}</td>
+                  <td class="text-light-50">{{staff.designation}}</td>
+                  <td class="text-light-50">{{getStoreName(staff)}}</td>
+                  <td class="text-light-50">{{staff.mobile}}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5" class="text-center py-5 text-light-50">
+                    <i class="bi bi-people fs-1 d-block mb-3"></i>
+                    No staff found
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

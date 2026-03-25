@@ -1,0 +1,93 @@
+.tracking-container {
+  animation: fadeIn 0.4s ease-out;
+  padding-bottom: 50px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cargo-timeline {
+  position: relative;
+  padding: 0 20px;
+}
+
+.timeline-track {
+  position: absolute;
+  top: 25px;
+  left: 10%;
+  right: 10%;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.timeline-node {
+  z-index: 2;
+  flex: 1;
+  position: relative;
+}
+
+.node-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #f1f5f9;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.node-icon-wrap.completed {
+  background: hsl(231, 100%, 45%);
+  border-color: hsla(231, 100%, 45%, 0.1);
+  color: #fff;
+  box-shadow: 0 0 0 8px hsla(231, 100%, 45%, 0.1);
+}
+
+.node-icon-wrap.current {
+  background: hsl(38, 100%, 50%);
+  border-color: hsla(38, 100%, 50%, 0.2);
+  color: #fff;
+  box-shadow: 0 0 0 8px hsla(38, 100%, 50%, 0.2);
+  animation: pulseNode 2s infinite;
+}
+
+@keyframes pulseNode {
+  0% { box-shadow: 0 0 0 0 hsla(38, 100%, 50%, 0.4); }
+  70% { box-shadow: 0 0 0 15px hsla(38, 100%, 50%, 0); }
+  100% { box-shadow: 0 0 0 0 hsla(38, 100%, 50%, 0); }
+}
+
+.node-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+
+.info-block {
+  padding: 10px 0;
+}
+
+.icon-box.sm {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+}
+
+.bg-primary-light { background: hsla(231, 100%, 95%, 1); color: hsl(231, 100%, 45%); }
+.bg-info-light { background: hsla(199, 100%, 95%, 1); color: hsl(199, 100%, 45%); }
+.bg-warning-light { background: hsla(38, 100%, 95%, 1); color: hsl(38, 100%, 45%); }
+.bg-success-light { background: hsla(142, 100%, 95%, 1); color: hsl(142, 100%, 45%); }
+
+.x-small { font-size: 0.75rem; }
+.fw-600 { font-weight: 600; }

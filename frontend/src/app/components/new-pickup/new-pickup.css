@@ -1,0 +1,47 @@
+.pickup-container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.search-wrap {
+  width: 350px;
+}
+
+.custom-table thead th {
+  background: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.custom-table tbody td {
+  padding: 18px 15px;
+  font-size: 0.9rem;
+}
+
+.fw-600 { font-weight: 600; }
+.x-small { font-size: 0.75rem; }
+
+.dropdown-menu-item {
+  display: block;
+  width: 100%;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.dropdown-menu-item:hover {
+  background-color: #f1f5f9;
+}
+
+.btn-group .btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+}

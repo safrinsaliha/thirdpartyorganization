@@ -1,0 +1,88 @@
+<div class="container-fluid p-4">
+  <div class="header-card mb-4 p-4 glass-card">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="text-white mb-1"><i class="bi bi-building me-2"></i>Branch Management</h2>
+        <p class="text-light-50 mb-0">Add and manage logistics branches</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Add Branch Form -->
+    <div class="col-xl-4">
+      <div class="premium-card p-4">
+        <h5 class="text-white mb-4">Add New Branch</h5>
+        <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label text-light-50">Branch Name</label>
+            <input type="text" class="form-control premium-input" formControlName="name" placeholder="Enter branch name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Branch Code</label>
+            <input type="text" class="form-control premium-input" formControlName="code" placeholder="BR-001">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">City</label>
+            <input type="text" class="form-control premium-input" formControlName="city" placeholder="City">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Contact No</label>
+            <input type="text" class="form-control premium-input" formControlName="contact_no" placeholder="Phone">
+          </div>
+          <div class="mb-4">
+            <label class="form-label text-light-50">Address</label>
+            <textarea class="form-control premium-input" formControlName="address" rows="3" placeholder="Full address"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-3" [disabled]="!branchForm.valid">
+            <i class="bi bi-plus-lg me-2"></i>Save Branch
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Branch List -->
+    <div class="col-xl-8">
+      <div class="premium-card p-0 overflow-hidden">
+        <div class="p-4 border-bottom border-secondary-subtle">
+          <h5 class="text-white mb-0">Active Branches</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table premium-table mb-0">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>City</th>
+                <th>Contact</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (branch of branches(); track branch.id) {
+                <tr>
+                  <td><span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{branch.code}}</span></td>
+                  <td class="text-white">{{branch.name}}</td>
+                  <td class="text-light-50">{{branch.city}}</td>
+                  <td class="text-light-50">{{branch.contact_no}}</td>
+                  <td>
+                    <span class="badge" [ngClass]="branch.is_active ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'">
+                      {{branch.is_active ? 'Active' : 'Inactive'}}
+                    </span>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5" class="text-center py-5 text-light-50">
+                    <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                    No branches found
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

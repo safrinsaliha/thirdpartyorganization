@@ -1,0 +1,92 @@
+<div class="container-fluid p-4">
+  <div class="header-card mb-4 p-4 glass-card">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="text-white mb-1"><i class="bi bi-currency-dollar me-2"></i>Tariff Management</h2>
+        <p class="text-light-50 mb-0">Define and manage shipping rates between cities</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-xl-4">
+      <div class="premium-card p-4">
+        <h5 class="text-white mb-4">Add Rate Chart</h5>
+        <form [formGroup]="tariffForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label text-light-50">Origin City</label>
+            <input type="text" class="form-control premium-input" formControlName="origin_city" placeholder="e.g. New York">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Destination City</label>
+            <input type="text" class="form-control premium-input" formControlName="dest_city" placeholder="e.g. Chicago">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-light-50">Service Type</label>
+            <select class="form-select premium-input" formControlName="service_type_id">
+              <option [ngValue]="null">Select Service</option>
+              @for (st of serviceTypes(); track st.id) {
+                <option [ngValue]="st.id">{{st.name}}</option>
+              }
+            </select>
+          </div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label text-light-50">Rate / KG</label>
+              <div class="input-group">
+                <span class="input-group-text bg-transparent border-end-0 text-light-50">$</span>
+                <input type="number" class="form-control premium-input border-start-0" formControlName="rate_per_kg">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label text-light-50">Min Weight</label>
+              <input type="number" class="form-control premium-input" formControlName="min_weight">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-3" [disabled]="!tariffForm.valid">
+            <i class="bi bi-cloud-upload me-2"></i>Upload Tariff
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-xl-8">
+      <div class="premium-card p-0 overflow-hidden">
+        <div class="p-4 border-bottom border-secondary-subtle">
+          <h5 class="text-white mb-0">Existing Rate Charts</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table premium-table mb-0">
+            <thead>
+              <tr>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Service</th>
+                <th>Rate/KG</th>
+                <th>Min Wt</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (t of tariffs(); track t.id) {
+                <tr>
+                  <td class="text-white">{{t.origin_city}}</td>
+                  <td class="text-white">{{t.dest_city}}</td>
+                  <td><span class="badge bg-secondary-subtle text-secondary">{{t.service_type_id}}</span></td>
+                  <td class="text-primary fw-bold">${{t.rate_per_kg}}</td>
+                  <td class="text-light-50">{{t.min_weight}} KG</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5" class="text-center py-5 text-light-50">
+                    <i class="bi bi-funnel fs-1 d-block mb-3"></i>
+                    No tariffs defined
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

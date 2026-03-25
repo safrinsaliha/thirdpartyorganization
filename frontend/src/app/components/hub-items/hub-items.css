@@ -1,0 +1,30 @@
+.hub-container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.search-wrap {
+  width: 350px;
+}
+
+.custom-table thead th {
+  background: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.custom-table tbody td {
+  padding: 18px 15px;
+  font-size: 0.9rem;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f5f9;
+}

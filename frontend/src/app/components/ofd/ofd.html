@@ -1,0 +1,87 @@
+<div class="container-fluid p-4">
+  <div class="header-card mb-4 p-4 glass-card">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="text-white mb-1"><i class="bi bi-truck me-2"></i>Out For Delivery</h2>
+        <p class="text-light-50 mb-0">Assign delivery agents and vehicles to shipments</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-xl-8">
+      <div class="premium-card p-0 overflow-hidden">
+        <div class="p-4 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center">
+          <h5 class="text-white mb-0">Available Shipments</h5>
+          <span class="badge bg-primary">{{selectedBookings.size}} Selected</span>
+        </div>
+        <div class="table-responsive">
+          <table class="table premium-table mb-0">
+            <thead>
+              <tr>
+                <th width="40">Select</th>
+                <th>Consignment</th>
+                <th>Destination</th>
+                <th>Customer</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (booking of availableBookings(); track booking.id) {
+                <tr [class.selected-row]="selectedBookings.has(booking.id!)" (click)="toggleSelection(booking.id!)" style="cursor: pointer;">
+                  <td>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" [checked]="selectedBookings.has(booking.id!)">
+                    </div>
+                  </td>
+                  <td><span class="text-white fw-medium">{{booking.consignment_no}}</span></td>
+                  <td class="text-light-50">{{booking.destination}}</td>
+                  <td class="text-light-50">{{booking.customer_name}}</td>
+                  <td><span class="badge bg-info-subtle text-info">{{booking.status}}</span></td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5" class="text-center py-5 text-light-50">
+                    <i class="bi bi-box-seam fs-1 d-block mb-3"></i>
+                    No shipments ready for delivery
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4">
+      <div class="premium-card p-4 sticky-top" style="top: 2rem;">
+        <h5 class="text-white mb-4">Assign Delivery</h5>
+        <form [formGroup]="ofdForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label text-light-50">Select Delivery Agent</label>
+            <select class="form-select premium-input" formControlName="staff_id">
+              <option [ngValue]="null">Select Agent</option>
+              @for (d of drivers(); track d.id) {
+                <option [ngValue]="d.id">{{d.name}} ({{d.employee_id}})</option>
+              }
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="form-label text-light-50">Vehicle Number</label>
+            <input type="text" class="form-control premium-input" formControlName="vehicle_no" placeholder="e.g. MH-01-AB-1234">
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-3" [disabled]="!ofdForm.valid || selectedBookings.size === 0">
+            <i class="bi bi-truck me-2"></i>Dispatch for Delivery
+          </button>
+        </form>
+
+        <div class="mt-4 p-3 rounded bg-light-5">
+          <p class="small text-light-50 mb-0">
+            <i class="bi bi-info-circle me-1"></i>
+            This will update the status of selected shipments to <strong>'Out for Delivery'</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,272 @@
+<div class="booking-container">
+  <div class="header-section mb-4">
+    <h1 class="page-title">New Consignment Booking</h1>
+    <p class="text-muted">Enter shipment and billing details to generate a new consignment</p>
+  </div>
+
+  <div *ngIf="message()" [class]="'alert alert-' + (message()?.type === 'success' ? 'success' : 'danger') + ' alert-dismissible fade show'" role="alert">
+    {{ message()?.text }}
+    <button type="button" class="btn-close" (click)="message.set(null)"></button>
+  </div>
+
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    <div class="row g-4">
+      <!-- SECTION 1: Consignment Details -->
+      <div class="col-12">
+        <div class="form-card premium-card bg-white p-4">
+          <h5 class="section-title mb-4 text-primary"><i class="bi bi-info-circle me-2"></i>SECTION 1: Consignment Details</h5>
+          <div class="row g-3">
+            <div class="col-md-2">
+              <label class="form-label d-block">Manual / Auto CD</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="manual_auto_cd" value="Manual" id="manualCd">
+                <label class="form-check-label" for="manualCd">Manual</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="manual_auto_cd" value="Auto" id="autoCd">
+                <label class="form-check-label" for="autoCd">Auto</label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Customer Name</label>
+              <select formControlName="customer_name" class="form-select">
+                <option value="">Select Customer</option>
+                <option value="Acme Corp">Acme Corp</option>
+                <option value="Global Tech">Global Tech</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Origin</label>
+              <select formControlName="origin" class="form-select">
+                <option value="">Select Origin</option>
+                <option value="New York">New York</option>
+                <option value="Chicago">Chicago</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Consignment Number</label>
+              <input type="text" formControlName="consignment_no" class="form-control" readonly>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Booking Date</label>
+              <input type="date" class="form-control" [value]="today | date:'yyyy-MM-dd'">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Service Type</label>
+              <select formControlName="service_type" class="form-select">
+                <option value="Surface">Surface</option>
+                <option value="Air">Air</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Pincode</label>
+              <input type="text" formControlName="pincode" class="form-control">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Destination</label>
+              <input type="text" formControlName="destination" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Consignor Details (Left) & SECTION 3: Consignee Details (Right) -->
+      <div class="col-md-6" formGroupName="consignor">
+        <div class="form-card premium-card bg-white p-4 h-100">
+          <h5 class="section-title mb-4 text-primary"><i class="bi bi-person-up me-2"></i>SECTION 2: Consignor Details</h5>
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label class="form-label">Consignor Name</label>
+              <input type="text" formControlName="name" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">City</label>
+              <input type="text" formControlName="city" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Pincode</label>
+              <input type="text" formControlName="pincode" class="form-control">
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Address</label>
+              <textarea formControlName="address" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Mobile Number</label>
+              <input type="text" formControlName="mobile" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">State</label>
+              <input type="text" formControlName="state" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" formGroupName="consignee">
+        <div class="form-card premium-card bg-white p-4 h-100">
+          <h5 class="section-title mb-4 text-primary"><i class="bi bi-person-down me-2"></i>SECTION 3: Consignee Details</h5>
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label class="form-label">Consignee Name</label>
+              <input type="text" formControlName="name" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">City</label>
+              <input type="text" formControlName="city" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Mobile Number</label>
+              <input type="text" formControlName="mobile" class="form-control">
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Address</label>
+              <textarea formControlName="address" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">State</label>
+              <input type="text" formControlName="state" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: Shipment Details -->
+      <div class="col-12" formGroupName="shipment">
+        <div class="form-card premium-card bg-white p-4">
+          <h5 class="section-title mb-4 text-primary"><i class="bi bi-box-seam me-2"></i>SECTION 4: Shipment Details</h5>
+          <div class="row g-3">
+            <div class="col-md-2">
+              <label class="form-label">Total Pieces</label>
+              <input type="number" formControlName="total_pcs" class="form-control">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Actual Weight</label>
+              <input type="number" formControlName="actual_weight" class="form-control">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Volumetric Weight</label>
+              <div class="input-group">
+                <input type="number" formControlName="volumetric_weight" class="form-control">
+                <button class="btn btn-outline-secondary" type="button" title="Get Vol Weight"><i class="bi bi-calculator"></i></button>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Invoice Value</label>
+              <input type="number" formControlName="invoice_value" class="form-control">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Invoice Number</label>
+              <input type="text" formControlName="invoice_number" class="form-control">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Eway Bill Number</label>
+              <input type="text" formControlName="eway_bill_no" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: Billing Details -->
+      <div class="col-md-8" formGroupName="billing">
+        <div class="form-card premium-card bg-white p-4 h-100">
+          <h5 class="section-title mb-4 text-primary"><i class="bi bi-receipt me-2"></i>SECTION 5: Billing Details</h5>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Payment Mode</label>
+              <select formControlName="payment_mode" class="form-select">
+                <option value="Credit">Credit</option>
+                <option value="CASH">Cash</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Chargeable Weight</label>
+              <input type="number" formControlName="chargeable_weight" class="form-control bg-light" readonly>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Rate Per Kg</label>
+              <input type="number" formControlName="rate_per_kg" class="form-control">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Freight Amount</label>
+              <input type="number" formControlName="freight_amt" class="form-control bg-light" readonly>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">FSC Amount</label>
+              <input type="number" formControlName="fsc_amt" class="form-control bg-light" readonly>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Other Charges</label>
+              <input type="number" formControlName="other_charges" class="form-control">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted small">CGST</label>
+              <div class="fw-bold">₹{{ bookingForm.get('billing.cgst')?.value }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted small">SGST</label>
+              <div class="fw-bold">₹{{ bookingForm.get('billing.sgst')?.value }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted small">IGST</label>
+              <div class="fw-bold">₹{{ bookingForm.get('billing.igst')?.value }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Net Total</label>
+              <h4 class="m-0 text-primary">₹{{ bookingForm.get('billing.net_total')?.value }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 6: Info Details -->
+      <div class="col-md-4" formGroupName="info">
+        <div class="form-card premium-card bg-white p-4 h-100">
+          <h5 class="section-title mb-4 text-primary"><i class="bi bi-person-badge me-2"></i>SECTION 6: Info Details</h5>
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="form-label small mb-0">Company Name</label>
+              <input type="text" formControlName="company_name" class="form-control form-control-sm">
+            </div>
+            <div class="col-6">
+              <label class="form-label small mb-0">Doc Type</label>
+              <input type="text" formControlName="doc_type" class="form-control form-control-sm">
+            </div>
+            <div class="col-6">
+              <label class="form-label small mb-0">Delivery Type</label>
+              <input type="text" formControlName="delivery_type" class="form-control form-control-sm">
+            </div>
+            <div class="col-6">
+              <label class="form-label small mb-0">Billing Branch</label>
+              <input type="text" formControlName="billing_branch" class="form-control form-control-sm">
+            </div>
+            <div class="col-6">
+              <label class="form-label small mb-0">Freight Charge By</label>
+              <input type="text" formControlName="freight_charge_by" class="form-control form-control-sm">
+            </div>
+            <div class="col-6">
+              <label class="form-label small mb-0">Invoice Currency</label>
+              <input type="text" formControlName="invoice_currency" class="form-control form-control-sm">
+            </div>
+            <div class="col-6">
+              <label class="form-label small mb-0">Booked By</label>
+              <input type="text" formControlName="booked_by" class="form-control form-control-sm">
+            </div>
+            <div class="col-6">
+              <label class="form-label small mb-0">Staff Name</label>
+              <input type="text" formControlName="staff_name" class="form-control form-control-sm">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-4 text-end">
+        <button type="button" class="btn btn-light px-4 me-2" (click)="resetForm()">Reset Form</button>
+        <button type="submit" class="btn btn-primary px-5 py-2" [disabled]="bookingForm.invalid || isLoading()">
+          <span *ngIf="!isLoading()">Confirm Booking</span>
+          <span *ngIf="isLoading()" class="spinner-border spinner-border-sm"></span>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

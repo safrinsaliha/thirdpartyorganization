@@ -1,0 +1,122 @@
+<div class="reports-container animation-fade-in">
+  <div class="header-section mb-4 d-flex justify-content-between align-items-end">
+    <div>
+      <h1 class="page-title text-dark">Logistics Analytics & Reports</h1>
+      <p class="text-muted">High-level operational performance and data insights</p>
+    </div>
+    <div class="pb-2">
+      <button class="btn btn-primary shadow-sm fw-bold px-4"><i class="bi bi-file-earmark-pdf me-2"></i> Export Monthly Report</button>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-5">
+    <div class="col-md-3">
+      <div class="stat-card premium-card bg-white p-4 shadow-sm border-0">
+        <div class="d-flex justify-content-between">
+          <div class="stat-label text-muted small text-uppercase fw-bold mb-2">Total Revenue</div>
+          <div class="icon-box bg-primary-light sm"><i class="bi bi-currency-rupee"></i></div>
+        </div>
+        <div class="stat-value h2 fw-bold text-dark mt-2">₹{{ reportStats().totalRevenue | number:'1.0-2' }}</div>
+        <div class="trend mt-2 text-success"><i class="bi bi-arrow-up-right me-1"></i> +12.5%</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card premium-card bg-white p-4 shadow-sm border-0">
+        <div class="d-flex justify-content-between">
+          <div class="stat-label text-muted small text-uppercase fw-bold mb-2">Delivery Rate</div>
+          <div class="icon-box bg-success-light sm"><i class="bi bi-truck"></i></div>
+        </div>
+        <div class="stat-value h2 fw-bold text-dark mt-2">{{ reportStats().deliveredPercent }}%</div>
+        <div class="progress mt-3" style="height: 6px; border-radius: 10px;">
+          <div class="progress-bar bg-success" [style.width.%]="reportStats().deliveredPercent"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card premium-card bg-white p-4 shadow-sm border-0">
+        <div class="d-flex justify-content-between">
+          <div class="stat-label text-muted small text-uppercase fw-bold mb-2">Avg. Load</div>
+          <div class="icon-box bg-info-light sm"><i class="bi bi-hammer"></i></div>
+        </div>
+        <div class="stat-value h2 fw-bold text-dark mt-2">{{ reportStats().avgWeight }} Kg</div>
+        <div class="text-muted x-small mt-2">Across {{ reportStats().totalBookings }} active bookings</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card premium-card bg-white p-4 shadow-sm border-0">
+        <div class="d-flex justify-content-between">
+          <div class="stat-label text-muted small text-uppercase fw-bold mb-2">Efficiency</div>
+          <div class="icon-box bg-warning-light sm"><i class="bi bi-lightning-charge"></i></div>
+        </div>
+        <div class="stat-value h2 fw-bold text-dark mt-2">{{ reportStats().pickupAcceptance }}%</div>
+        <div class="progress mt-3" style="height: 6px; border-radius: 10px;">
+          <div class="progress-bar bg-warning" [style.width.%]="reportStats().pickupAcceptance"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-card premium-card bg-white p-0 overflow-hidden shadow-sm">
+    <div class="p-4 bg-light border-bottom d-flex justify-content-between align-items-center">
+      <h5 class="section-title m-0 text-dark fw-bold">Live Booking Ledger</h5>
+      <div class="input-group input-group-sm w-25">
+        <span class="input-group-text bg-white border-end-0"><i class="bi bi-filter"></i></span>
+        <select class="form-select border-start-0">
+          <option>All Status</option>
+          <option>Booked</option>
+          <option>In Transit</option>
+          <option>Delivered</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light text-muted small text-uppercase">
+          <tr>
+            <th class="ps-4">Consignment #</th>
+            <th>Date</th>
+            <th>Client Name</th>
+            <th>Route Profile</th>
+            <th>Chargeable Wt</th>
+            <th>Net Value</th>
+            <th class="text-end pe-4">Current Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of bookings()">
+            <td class="ps-4">
+              <div class="fw-bold text-primary">{{ booking.consignment_no }}</div>
+              <div class="text-muted x-small">TRK: {{ booking.consignment_no }}</div>
+            </td>
+            <td class="text-muted">{{ booking.booking_date | date:'dd MMM yyyy' }}</td>
+            <td class="fw-semibold text-dark">{{ booking.customer_name }}</td>
+            <td>
+              <div class="d-flex align-items-center">
+                <span class="badge bg-light text-dark border">{{ booking.origin }}</span>
+                <i class="bi bi-arrow-right mx-2 text-muted x-small"></i>
+                <span class="badge bg-light text-dark border">{{ booking.destination }}</span>
+              </div>
+            </td>
+            <td><span class="fw-bold">{{ booking.shipment?.chargeable_weight }}</span> <small class="text-muted">Kg</small></td>
+            <td class="fw-bold text-dark">₹{{ booking.billing?.net_total | number:'1.2-2' }}</td>
+            <td class="text-end pe-4">
+              <span [class]="getStatusClass(booking.status)" class="px-3 py-2 fw-bold">{{ booking.status }}</span>
+            </td>
+          </tr>
+          <tr *ngIf="bookings().length === 0">
+            <td colspan="7" class="text-center py-5">
+                <div *ngIf="isLoading()" class="py-4">
+                  <div class="spinner-grow text-primary" role="status"></div>
+                  <p class="mt-2 text-muted">Generating report data...</p>
+                </div>
+                <div *ngIf="!isLoading()" class="py-4 opacity-50">
+                  <i class="bi bi-clipboard-x display-4"></i>
+                  <p class="mt-2 text-muted fw-bold">No data found within the selected filters.</p>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
