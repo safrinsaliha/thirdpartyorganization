@@ -5,3 +5,4 @@ pymysql
 pyjwt
 werkzeug
 python-dotenv
+gunicorn
