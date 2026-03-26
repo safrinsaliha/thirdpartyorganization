@@ -1,4 +1,5 @@
-from flask import Flask
+import os
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from config import Config
 from database.db import db
@@ -21,7 +22,7 @@ from models.tariff_model import Tariff, Payment, Wallet
 from models.delivery_details_model import DeliveryStatus, OFD
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../frontend/dist/frontend/browser', static_url_path='/')
     app.config.from_object(Config)
     
     CORS(app)
@@ -121,9 +122,13 @@ def create_app():
     app.register_blueprint(delivery_ops_bp, url_prefix='/api')
     app.register_blueprint(report_bp, url_prefix='/api')
 
-    @app.route('/')
-    def index():
-        return {"message": "Cargo Logistics API Running"}
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def catch_all(path):
+        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+            return send_from_directory(app.static_folder, path)
+        else:
+            return send_from_directory(app.static_folder, 'index.html')
 
     return app
 

@@ -22,7 +22,7 @@ export interface Wallet {
 })
 export class PaymentService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api';
+  private apiUrl = '/api';
 
   recordPayment(payment: Payment): Observable<Payment> {
     return this.http.post<Payment>(`${this.apiUrl}/payments`, payment);

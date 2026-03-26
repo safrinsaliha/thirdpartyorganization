@@ -41,7 +41,7 @@ export interface ServiceType {
 })
 export class MasterService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/master';
+  private apiUrl = '/api/master';
 
   getBranches(): Observable<Branch[]> {
     return this.http.get<Branch[]>(`${this.apiUrl}/branches`);

@@ -17,7 +17,7 @@ export interface Tariff {
 })
 export class TariffService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api';
+  private apiUrl = '/api';
 
   getTariffs(): Observable<Tariff[]> {
     return this.http.get<Tariff[]>(`${this.apiUrl}/tariffs`);
