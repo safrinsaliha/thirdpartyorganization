@@ -11,6 +11,7 @@ import { Tracking } from './components/tracking/tracking';
 import { Reports } from './components/reports/reports';
 import { TrackingPublic } from './components/tracking-public/tracking-public';
 import { Master } from './components/master/master';
+import { InventoryComponent } from './components/inventory/inventory';
 import { OFDComponent } from './components/ofd/ofd';
 import { DeliveryEntry } from './components/delivery-entry/delivery-entry';
 import { TariffMaster } from './components/tariff/tariff-master';
@@ -31,6 +32,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: Dashboard },
       { path: 'master', component: Master },
+      { path: 'inventory', component: InventoryComponent },
       { path: 'booking', component: Booking },
       { path: 'new-pickup', component: NewPickup },
       { path: 'hub-items', component: HubItems },

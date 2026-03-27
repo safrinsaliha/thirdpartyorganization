@@ -1,0 +1,70 @@
+.inventory-container {
+  min-height: 80vh;
+}
+
+.premium-title {
+  background: linear-gradient(135deg, #2c3e50, #00d2ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: 2.2rem;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  overflow: hidden;
+}
+
+.btn-premium {
+  background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+}
+
+.btn-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 210, 255, 0.4);
+  color: white;
+}
+
+.btn-premium:disabled {
+  opacity: 0.7;
+  transform: none;
+}
+
+.table thead th {
+  background: rgba(0, 210, 255, 0.05);
+  border-bottom: 2px solid rgba(0, 210, 255, 0.1);
+  color: #2c3e50;
+  font-weight: 700;
+  padding: 15px;
+}
+
+.table tbody td {
+  padding: 15px;
+  vertical-align: middle;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.badge {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}

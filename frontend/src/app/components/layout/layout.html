@@ -23,6 +23,12 @@
             <span *ngIf="!isSidebarCollapsed">Master</span>
           </a>
         </li>
+        <li routerLinkActive="active">
+          <a routerLink="/inventory" title="Inventory">
+            <i class="bi bi-box2-fill"></i>
+            <span *ngIf="!isSidebarCollapsed">Inventory</span>
+          </a>
+        </li>
         <li class="nav-divider" *ngIf="!isSidebarCollapsed">Operation</li>
         <li routerLinkActive="active">
           <a routerLink="/booking" title="Booking">

@@ -13,6 +13,7 @@ from routes.master_routes import master_bp
 from routes.tariff_routes import tariff_bp
 from routes.delivery_ops_routes import delivery_ops_bp
 from routes.report_routes import report_bp
+from routes.inventory_routes import inventory_bp
 
 from models.user_model import User
 from models.booking_model import Booking, ShipmentDetail, BillingDetail
@@ -37,6 +38,7 @@ def create_app():
         import models.master_model
         import models.tariff_model
         import models.delivery_details_model
+        import models.inventory_model
         
         db.create_all()
 
@@ -121,6 +123,7 @@ def create_app():
     app.register_blueprint(tariff_bp, url_prefix='/api')
     app.register_blueprint(delivery_ops_bp, url_prefix='/api')
     app.register_blueprint(report_bp, url_prefix='/api')
+    app.register_blueprint(inventory_bp, url_prefix='/api')
 
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
