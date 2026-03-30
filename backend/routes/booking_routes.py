@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models.booking_model import Booking, ShipmentDetail, BillingDetail
+from models.pickup_model import Pickup
+from models.delivery_model import HubItem
 from database.db import db
 from routes.auth_routes import token_required
 
@@ -97,7 +99,33 @@ def create_booking(current_user):
     db.session.add(new_billing)
 
     db.session.commit()
-    
+
+    # Auto-create a Pickup record so the booking shows in New Pickup module
+    auto_pickup = Pickup(
+        consignment_no=new_booking.consignment_no,
+        client_name=new_booking.customer_name or new_booking.consignor_name or 'N/A',
+        sender=new_booking.consignor_name,
+        receiver=new_booking.consignee_name,
+        pcs_weight=f"{shipment_data.get('total_pcs', 0)} pcs / {shipment_data.get('chargeable_weight', 0)} kg",
+        payment_status=billing_data.get('payment_mode', 'Pending'),
+        pickup_status='Pending',
+        delivery_status='Not Dispatched'
+    )
+    db.session.add(auto_pickup)
+
+    # Auto-create a HubItem so booking shows in Hub Direct module
+    auto_hub_item = HubItem(
+        invoice_no=new_booking.consignment_no,
+        client_name=new_booking.customer_name or new_booking.consignor_name or 'N/A',
+        weight=shipment_data.get('chargeable_weight', 0.0),
+        origin_hub=new_booking.origin or 'Origin Hub',
+        destination=new_booking.destination or 'Destination Hub',
+        status='Received',
+        delivery_status='In Transit'
+    )
+    db.session.add(auto_hub_item)
+    db.session.commit()
+
     return jsonify({'message': 'Booking created successfully', 'booking': new_booking.to_dict()}), 201
 
 @booking_bp.route('/bookings/<int:id>', methods=['PUT'])
