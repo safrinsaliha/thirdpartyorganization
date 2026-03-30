@@ -28,6 +28,8 @@ class Pickup(db.Model):
             'staff': self.staff,
             'sender': self.sender,
             'receiver': self.receiver,
+            'sender_details': self.sender,       # alias for frontend
+            'receiver_details': self.receiver,   # alias for frontend
             'pcs_weight': self.pcs_weight,
             'created_at': self.created_at.isoformat() if self.created_at else None
         }

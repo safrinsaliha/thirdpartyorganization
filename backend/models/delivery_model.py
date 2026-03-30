@@ -23,6 +23,7 @@ class HubItem(db.Model):
             'employee_name': self.employee_name,
             'origin_hub': self.origin_hub,
             'destination': self.destination,
+            'destination_name': self.destination,  # alias for frontend search
             'delivery_status': self.delivery_status,
             'status': self.status,
             'created_at': self.created_at.isoformat() if self.created_at else None
